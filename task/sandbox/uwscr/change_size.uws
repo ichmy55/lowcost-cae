@@ -1,0 +1,16 @@
+//
+// Wait for Sandbox active
+//
+wid   = GETID("Windows Sandbox",,10.0)
+width = status(wid,ST_WIDTH)
+lid = 0
+repeat
+    lid = lid + 1
+    width2 = status(wid,ST_WIDTH)
+    sleep(0.1)
+until (width2 <> width) or (lid > 1000)
+//
+// Change Sandbox windows size
+//
+ctrlwin(wid,ACTIVATE)
+stat = ACW(wid,50,50,1924,1131)

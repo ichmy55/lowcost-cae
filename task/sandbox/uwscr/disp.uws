@@ -1,0 +1,76 @@
+//
+// タイトル帯２の表示関数
+//
+PROCEDURE showtitle2(direction: number, colc: number, x: number, y: number, st2)
+  x += delta[direction][0]
+  y += delta[direction][1]
+  if (st2 != EMPTY) THEN
+    x += delta2[direction][0]
+    y += delta2[direction][1]
+  endif
+  if (modef == modeconst[0] ) THEN
+    balloon(confirm, x, y,0, fontSize2, fontName, fontColor, bgColor[colc], transparency)
+  ENDIF
+  breaker = breaker orB $000004
+  lid = 0
+  sleep(0.1)
+  repeat
+    lid = lid + 1
+    sleep(0.1)
+  UNTIL ((breaker andB $800000) != 0) or (lid > waitsec * 10) 
+  balloon()
+FEND
+//
+// 吹き出し＋くちばし付きの表示関数
+//
+PROCEDURE showbeak(direction: number, colc: number, x: number, y: number, st)
+  if (direction >= 5) THEN
+    print delta2[direction][0]
+    x += delta2[direction][0]
+    y += delta2[direction][1]
+    if (st != EMPTY) THEN
+      if (direction == 5) THEN
+        st = "　" + st
+      ENDIF
+      balloon(st, x, y, 0, fontSize, fontName, fontColor, bgColor[colc], transparency)
+    ENDIF
+  ELSE
+    balloon(st, x, y, direction, fontSize, fontName, fontColor, bgColor[colc], transparency)
+  ENDIF
+  lid = 0
+  sleep(0.1)
+  if (direction >= 5) THEN
+    breaker = breaker orB $000002
+  ELSE
+    breaker = breaker orB $000001
+  ENDIF
+  repeat
+    lid = lid + 1
+    sleep(0.1)
+  UNTIL ((breaker andB $800000) != 0) or (lid > waitsec * 10) 
+  balloon()
+FEND
+//
+// クリック待ち
+//
+PROCEDURE wait_click()
+  lid = 0
+  if (modef == modeconst[0] ) THEN
+    repeat
+      lid = lid + 1
+      sleep(0.1)
+    UNTIL (getkeystate(VK_LBUTTON) or (lid > waitsec * 10)) 
+  ENDIF
+  breaker = breaker orB $800000
+  sleep(0.5)
+FEND
+//
+// 画像保存
+//
+PROCEDURE save_image()
+  if (fname != EMPTY) THEN
+     fn = "C:\output\" + fname + format(fnamenum,3,0,FMT_ZERO)
+     fnamenum = fnamenum + 1
+     SAVEIMG(fn)
+  endif 
+FEND

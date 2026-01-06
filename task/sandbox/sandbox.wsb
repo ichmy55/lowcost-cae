@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration>
+  <!-- ホストマシンと特定のフォルダを共有 -->
+  <MappedFolders>
+    <MappedFolder>
+      <HostFolder>D:\lowcost-cae\script</HostFolder>
+      <SandboxFolder>C:\script</SandboxFolder>
+      <ReadOnly>true</ReadOnly>
+    </MappedFolder>
+    <MappedFolder>
+      <HostFolder>D:\lowcost-cae\download</HostFolder>
+      <SandboxFolder>C:\download</SandboxFolder>
+    </MappedFolder>
+    <MappedFolder>
+      <HostFolder>D:\lowcost-cae\output</HostFolder>
+      <SandboxFolder>C:\output</SandboxFolder>
+    </MappedFolder>
+  </MappedFolders>
+  <LogonCommand>
+	  <Command>cmd.exe /c C:\script\sandstart.cmd
+  </Command>
+  </LogonCommand>
+</Configuration>

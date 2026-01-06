@@ -1,0 +1,94 @@
+//
+OPTION GUIPRINT
+OPTION LOGFILE = 4
+OPTION LOGPATH = "C:\output\uwscr.log"
+//
+// 大域定数
+//
+const  fontName         = "MS Gothic" // 吹き出し内文字フォント名
+const  fontColor        = $000000     // 吹き出し内文字色
+const  fontsize         = 20          // タイトル帯での文字サイズ
+const  fontsize2        = 14          // 確認要求での文字サイズ
+const  transparency     = 0           // 文字背景の透明度
+const  waitsec          = 10          // クリック待ちする秒数
+const  confirm          = "準備ができたら、左クリックしてください" // 確認要求
+const  csv_filename     = "commands.csv" 
+const  debugconst       = "debug" 
+const  initial_url      = "https://ichmy.0t0.jp/" 
+public modeconst        = ["step","through","video"] 
+public delta            = [[0,70],[0,70],[0,-70],[60,69],[0,69],[0,70],[0,70],[0,70],[-60,69],[0,69]]
+public delta2           = [[0,70],[0,70],[0,-70],[0,70],[0,70],[0,70],[0,70],[0,70],[60,70],[0,70]]
+public bgColor          = [$FFFFE0, $E0FFFF] // 文字背景色
+//
+// 大域変数
+//
+public breaker = 0       // スレッド停止要求フラグ
+public debugf  = false   // デバッグ表示要求フラグ
+public modef             // 動作モードフラグ
+public command_list = [] // 本UWSに対する動作指示
+public command_num       // 上記行数
+public fname    = EMPTY  // 結果画像名
+public fnamenum = 0      // 結果画像連番
+public builder 
+public msedge  
+public tab
+//
+// タイトル帯の表示関数
+//
+CALL disp.uws
+CALL get_param.uws
+CALL edge.uws
+//
+// メイン処理
+//
+// 初期設定
+get_parameter(PARAM_STR)
+get_commands()
+//
+// デバッグコンソール出力
+print "Debug start"
+LOGPRINT(debugf,1100,400)
+//
+// コマンドを順次実行
+//
+print "QWE0"
+print command_num
+for n = 0 to command_num -1
+  direction = command_list[n][0]
+  colc = command_list[n][1]
+  x    = command_list[n][2]
+  y    = command_list[n][3]
+  st   = command_list[n][4]
+  st2  = command_list[n][5]
+  print "QWE1"
+  print n
+  print direction
+  if (direction == 11) THEN
+    start_edge()
+  ELSEIF (direction == 12) THEN
+    url_edge(st)
+  ELSEIF (direction == 13) THEN
+    mouth_edge(x,y)
+  ELSEIF (direction == 14) THEN
+    scroll_edge(x)
+  ELSEIF (direction == 15) THEN
+    keyimage_edge(st)
+  ELSEIF (direction == 16) THEN
+    move_edge(x,y)
+  ELSE
+    breaker = 0
+    THREAD showbeak(direction,colc,x,y,st)
+    THREAD showbeak(direction+5,colc,x,y,st2)
+    THREAD showtitle2(direction,colc,x,y,st2)
+    lid = 0
+    repeat
+      lid = lid + 1
+      sleep(0.1)
+    UNTIL ((breaker andB $00000F) == $000007) or (lid > waitsec * 10)
+    save_image()
+    wait_click()
+  ENDIF
+  print "QWE6"
+  print n
+next
+sleep(10)
