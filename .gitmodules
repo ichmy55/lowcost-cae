@@ -1,0 +1,6 @@
+[submodule "task/commons1"]
+	path = task/commons1
+	url = https://github.com/ichmy55/commons1.git
+[submodule "task/commons2"]
+	path = task/commons2
+	url = https://github.com/ichmy55/commons2.git
