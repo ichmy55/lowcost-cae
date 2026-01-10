@@ -1,18 +1,18 @@
 name-template: 'v$RESOLVED_VERSION'
 tag-template: 'v$RESOLVED_VERSION'
 categories:
-  - title: ":rocket: Features"
+  - title: ":boom: 破壊的更新"
     labels:
-      - 'Feature'
+      - ':boom: 破壊的更新'
   - title: ":sparkles: 機能追加"
     labels:
       - ':sparkles: 機能追加'
-  - title: ":memo: Wording correction"
+  - title: ":adhesive_bandage: 小修整"
     labels:
-      - 'Correction'
-  - title: ":bug: Bug Fixes"
+      - ':adhesive_bandage: 小修整'
+  - title: ":bug: 不具合"
     labels:
-      - bug
+      - ':bug: 不具合'
   - title: ":fire: Remove"
     labels:
       - 'Remove'
@@ -24,7 +24,7 @@ categories:
       - 'Testing'
   - title: ":green_heart: CI/CD"
     labels:
-      - 'CI/CD'
+      - ':green_heart: CI/CD'
   - title: ":up: Dependencies"
     labels:
       - 'Dependencies'
@@ -34,10 +34,10 @@ categories:
   - title: ":gear: Development"
     labels:
       - 'Development'
-  - title: ":book: Documentation"
+  - title: ":book:ドキュメント"
     labels:
-      - documentation
-  - title: Other Changes
+      - ':book:ドキュメント'
+  - title: ":wrench:その他"
     labels:
       - "*"
 version-resolver:
