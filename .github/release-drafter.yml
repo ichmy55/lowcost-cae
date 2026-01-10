@@ -4,9 +4,9 @@ categories:
   - title: ":rocket: Features"
     labels:
       - 'Feature'
-  - title: ":+1: Adding Pages"
+  - title: ":sparkles: 機能追加"
     labels:
-      - 'Page'
+      - ':sparkles: 機能追加'
   - title: ":memo: Wording correction"
     labels:
       - 'Correction'
@@ -43,10 +43,10 @@ categories:
 version-resolver:
   major:
     labels:
-      - 'major'
+      - ':boom: 破壊的更新'
   minor:
     labels:
-      - 'minor'
+      - ':sparkles: 機能追加'
   patch:
     labels:
       - 'patch'
