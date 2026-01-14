@@ -11,10 +11,11 @@ const  fontsize         = 20          // タイトル帯での文字サイズ
 const  fontsize2        = 14          // 確認要求での文字サイズ
 const  transparency     = 0           // 文字背景の透明度
 const  waitsec          = 10          // クリック待ちする秒数
+const  waitsec2         = 600         // ファイルダウンロード待ちする秒数
 const  confirm          = "準備ができたら、左クリックしてください" // 確認要求
 const  csv_filename     = "commands.csv" 
 const  debugconst       = "debug" 
-const  initial_url      = "https://ichmy.0t0.jp/" 
+const  initial_url      = "about:blank" 
 public modeconst        = ["step","through","video"] 
 public delta            = [[0,70],[0,70],[0,-70],[60,69],[0,69],[0,70],[0,70],[0,70],[-60,69],[0,69]]
 public delta2           = [[0,70],[0,70],[0,-70],[0,70],[0,70],[0,70],[0,70],[0,70],[60,70],[0,70]]
@@ -74,6 +75,8 @@ for n = 0 to command_num -1
   ELSEIF (direction == 15) THEN
     keyimage_edge(st)
   ELSEIF (direction == 16) THEN
+    waitkey_edge(st)
+  ELSEIF (direction == 17) THEN
     move_edge(x,y)
   ELSE
     breaker = 0
@@ -92,3 +95,4 @@ for n = 0 to command_num -1
   print n
 next
 sleep(10)
+save_image()

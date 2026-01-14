@@ -52,7 +52,8 @@ clean: ## ローカル環境のファイルを掃除し、再度持ち上げ
 	cp sandbox.wsb $(ROOT_DIR)
 	cp sandstart.cmd $(SCRIPT_DEST)
 	cp uwscr/* $(SCRIPT_DEST)
-	cp -r keyimage $(SCRIPT_DEST)
+	mkdir $(SCRIPT_DEST)/keyimage
+	cp -L keyimage/* $(SCRIPT_DEST)/keyimage/
 #nkf -Lw -s uwscr/down_prepo.uws > $(ROOT_DIR)/script/down_prepo.uws
 #
 distclean: ## ローカル環境のファイルをいったん全消し

@@ -47,9 +47,18 @@ PROCEDURE keyimage_edge(st)
   x = pt[0][0] +100
   y = pt[0][1] +20
   BTN(LEFT,CLICK,x,y)
-  print "QWE8"
-  print x
-  print y
+FEND
+//
+// イメージ出現待ち
+//
+PROCEDURE waitkey_edge(st)
+  st = "C:\script\keyimage\"+st
+  lid = 0
+  repeat
+    pt = SearchImage(st,95,1)
+    lid = lid + 1
+    sleep(0.1)
+  UNTIL (LENGTH(pt) >=1) or (lid > waitsec2 * 10)
 FEND
 //
 // Edge にカーソル移動
