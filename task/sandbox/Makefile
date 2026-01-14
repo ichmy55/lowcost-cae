@@ -35,12 +35,16 @@ boot: ## sandboxの起動
 	sleep 3
 	./uwscr.exe ../script/change_size.uws
 #
-download: ## uwscrをネットからダウンロードする
+download: ## 実行ファイルをネットからダウンロードする
 	@echo "Donwnload!:"
 	cd $(DOWNLOAD_DEST)
 	@if [ ! -e ./uwscr.exe ]; then
 		wget -N $(UWSCR_URL)
 		unzip UWSCRx64.zip
+	fi
+	@if [ ! -d ./ppink ]; then
+		wget -N $(PPINK_URL)
+		unzip ppink.1.9.100.zip
 	fi
 
 clean: ## ローカル環境のファイルを掃除し、再度持ち上げ
