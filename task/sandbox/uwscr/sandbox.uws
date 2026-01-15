@@ -39,8 +39,12 @@ public tab
 CALL disp.uws
 CALL get_param.uws
 CALL edge.uws
+CALL ppink.uws
 //
 // メイン処理
+//
+// ppInkの起動
+exec("C:\download\ppink\ppInk.exe")
 //
 // 初期設定
 get_parameter(PARAM_STR)
