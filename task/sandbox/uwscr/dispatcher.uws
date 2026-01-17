@@ -1,0 +1,57 @@
+module dispatcher
+//
+// コマンドを順次実行
+//
+  function selector()
+    print "Num of commands = " + command_num
+    for n = 0 to command_num -1
+      direction = command_list[n][0]
+      colc = command_list[n][1]
+      x    = command_list[n][2]
+      y    = command_list[n][3]
+      st   = command_list[n][4]
+      st2  = command_list[n][5]
+      print "Command #=" + n + " dir=" + direction
+      select direction
+        case 11
+          edge.init()
+        case 12
+          edge.url_edge(st)
+        case 13
+          edge.mouth_edge(x,y)
+        case 14
+          edge.scroll_edge(x)
+        case 15
+          edge.keyimage_edge(st)
+        case 16
+          edge.waitkey_edge(st)
+        case 17
+          edge.move_edge(x,y)
+        case 0
+          breaker = 0
+          THREAD showbeak.title(st)
+          lid = 0
+          repeat
+            lid = lid + 1
+            sleep(0.1)
+          UNTIL ((breaker andB $00000F) == $000001) or (lid > waitsec * 10)
+          showbeak.save_image()
+          showbeak.wait_click()
+        DEFAULT
+          breaker = 0
+          THREAD showbeak.beak(direction,colc,x,y,st)
+          THREAD showbeak.beak(direction+5,colc,x,y,st2)
+          THREAD showbeak.showtitle2(direction,colc,x,y,st2)
+          lid = 0
+          repeat
+            lid = lid + 1
+            sleep(0.1)
+          UNTIL ((breaker andB $00000F) == $000007) or (lid > waitsec * 10)
+          showbeak.save_image()
+          showbeak.wait_click()
+      SELEND
+    next
+    result = TRUE
+  fend
+//
+endmodule

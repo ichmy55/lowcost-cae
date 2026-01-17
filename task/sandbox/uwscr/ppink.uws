@@ -3,4 +3,11 @@
 //
 module ppink
 
+function init()
+//
+// ppInkの起動
+  exec("C:\download\ppink\ppInk.exe")
+//
+fend
+
 endmodule
