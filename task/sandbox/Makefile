@@ -46,6 +46,10 @@ download: ## 実行ファイルをネットからダウンロードする
 		wget -N $(PPINK_URL)
 		unzip ppink.1.9.100.zip
 	fi
+	@if [ ! -e ./Zoomit64.exe ]; then
+		wget -N $(ZOOMIT_URL)
+		unzip Zoomit.zip
+	fi
 
 clean: ## ローカル環境のファイルを掃除し、再度持ち上げ
 	@echo "clean!:"

@@ -31,6 +31,8 @@ module dispatcher
           ppink.mode(true)
         case 22
           ppink.line(x,y)
+        case 31
+          zoomit.mode(true)
         case 0
           breaker = 0
           THREAD showbeak.title(st)
