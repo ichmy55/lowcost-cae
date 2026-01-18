@@ -2,12 +2,43 @@
 // ppinkを制御する関数群
 //
 module ppink
+  //
+  // ppink へのリクエスト
+  const url_ppink = "http://localhost:7999/"
+  const url_ppink2 = "Inking?S="       // 動作モード変更
+  const url_ppink3 = "Fold?F="         // 動作モード変更
+  const url_ppink4 = "CurrentTool?T=1" // ペン種の設定=Line
+  const url_ppink5 = "CurrentPen?P=1"  // ペン種の設定
+  //const url_ppink6 = "PenDef?P=1&R=255&G=0&B=0&F=False&L=Solid" // ペン色の設定=Red
+  const url_ppink6 = "PenDef?P=1" // ペン色の設定=Red
+  //
+  function init()
+  //
+  // ppInkの起動
+    exec("C:\download\ppink\ppInk.exe")
+    result = TRUE
+  fend
 
-function init()
-//
-// ppInkの起動
-  exec("C:\download\ppink\ppInk.exe")
-//
-fend
+  function mode(flag)
+    //
+    // ppInkの動作モード変更
+    res = WebRequest(url_ppink+url_ppink2+flag)
+    res = WebRequest(url_ppink+url_ppink3+flag)
+    result = TRUE
+  fend
 
+  function line(x,y)
+    //
+    // 線引き
+    this.mode(true)
+    res = WebRequest(url_ppink+url_ppink4) //線種の設定
+    res = WebRequest(url_ppink+url_ppink5) //線種の設定
+    print "QWE6="+res.status
+    print "QWE7="+res.body
+    res = WebRequest(url_ppink+url_ppink6) //線種の設定
+    print "QWE8="+res.status
+    print "QWE9="+res.body
+    edge.drug(x,y)
+    result = TRUE
+  fend
 endmodule

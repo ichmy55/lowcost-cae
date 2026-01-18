@@ -29,6 +29,8 @@ module edge
   function mouth_edge(x: number, y: number)
     MMV(x,y)
     BTN(LEFT,CLICK)
+    xnow = x
+    ynow = y
     RESULT=true
   FEND
 //
@@ -52,6 +54,8 @@ module edge
     x = pt[0][0] +100
     y = pt[0][1] +20
     BTN(LEFT,CLICK,x,y)
+    xnow = x
+    ynow = y
     RESULT=true
   FEND
 //
@@ -72,6 +76,39 @@ module edge
 //
   function move_edge(x: number, y: number)
     MMV(x,y)
+    xnow = x
+    ynow = y
+    RESULT=true
+  FEND
+//
+// ドラッグ移動
+//
+  function drug(x: number, y: number)
+    xnow = 100
+    ynow = 100
+    x = 200
+    y = 200
+    //print "QWE1 x="+xnow+"y="+ynow
+    //doscmd("echo QWE1 > \output/qwe1.txt",true)
+    BTN(LEFT, UP,,,100)
+    BTN(LEFT, DOWN,xnow,ynow,100)
+    //sleep(10)
+    MMV(x,y)
+    //print "QWE2 x="+x+"y="+y
+    //doscmd("echo QWE2 > \output/qwe2.txt",true)
+    //sleep(10)
+    BTN(LEFT, DOWN,200,200,100)
+    //print "QWE3"
+    //doscmd("echo QWE3 > \output/qwe3.txt",true)
+    //sleep(10)
+    BTN(LEFT, UP,,,100)
+    //print "QWE4"
+    //doscmd("echo QWE4 > \output/qwe4.txt",true)
+    //sleep(10)
+    //print "QWE5"
+    //doscmd("echo QWE5 > \output/qwe5.txt",true)
+    xnow = x
+    ynow = y
     RESULT=true
   FEND
 

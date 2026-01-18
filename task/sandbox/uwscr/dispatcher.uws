@@ -27,6 +27,10 @@ module dispatcher
           edge.waitkey_edge(st)
         case 17
           edge.move_edge(x,y)
+        case 21
+          ppink.mode(true)
+        case 22
+          ppink.line(x,y)
         case 0
           breaker = 0
           THREAD showbeak.title(st)
@@ -37,7 +41,7 @@ module dispatcher
           UNTIL ((breaker andB $00000F) == $000001) or (lid > waitsec * 10)
           showbeak.save_image()
           showbeak.wait_click()
-        DEFAULT
+        case 0
           breaker = 0
           THREAD showbeak.beak(direction,colc,x,y,st)
           THREAD showbeak.beak(direction+5,colc,x,y,st2)

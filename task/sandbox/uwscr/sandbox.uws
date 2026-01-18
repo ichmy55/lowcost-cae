@@ -25,6 +25,8 @@ public command_list = [] // 本UWSに対する動作指示
 public command_num       // 上記行数
 public fname    = EMPTY  // 結果画像名
 public fnamenum = 0      // 結果画像連番
+public xnow = 0          // 最終ポインタ位置X
+public ynow = 0          // 最終ポインタ位置Y
 public builder 
 public msedge  
 public tab
@@ -40,13 +42,11 @@ CALL ppink.uws
 // メイン処理
 //
 // 初期設定
-ppink.init()
-getparam.get_parameter(PARAM_STR)
-getparam.get_commands()
-//
-// デバッグコンソール出力
 print "Debug start"
 LOGPRINT(debugf,1100,400)
+getparam.get_parameter(PARAM_STR)
+getparam.get_commands()
+ppink.init()
 //
 // コマンドを順次実行
 //

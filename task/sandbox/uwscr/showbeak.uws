@@ -36,6 +36,8 @@ module showbeak
       balloon(st, x, y, direction, fontSize, fontName, fontColor, bgColor[colc], transparency)
     ENDIF
     breaker = breaker orB $000002
+    xnow = x
+    ynow = y
     this.wait_break()
     balloon()
     result = TRUE
@@ -54,6 +56,8 @@ module showbeak
       balloon(confirm, x, y,0, fontSize2, fontName, fontColor, bgColor[colc], transparency)
     ENDIF
     breaker = breaker orB $000004
+    xnow = x
+    ynow = y
     this.wait_break()
     balloon()
   FEND
