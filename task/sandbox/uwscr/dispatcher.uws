@@ -9,8 +9,10 @@ module dispatcher
       colc = command_list[n][1]
       x    = command_list[n][2]
       y    = command_list[n][3]
-      st   = command_list[n][4]
-      st2  = command_list[n][5]
+      x2   = command_list[n][4]
+      y2   = command_list[n][5]
+      st   = command_list[n][6]
+      st2  = command_list[n][7]
       print "Command #=" + n + " dir=" + direction
       select direction
         case 11
@@ -27,12 +29,10 @@ module dispatcher
           edge.waitkey_edge(st)
         case 17
           edge.move_edge(x,y)
-        case 21
-          ppink.mode(true)
-        case 22
-          ppink.line(x,y)
         case 31
           zoomit.mode(true)
+        case 32
+          zoomit.line(x,y,x2,y2)
         case 0
           breaker = 0
           THREAD showbeak.title(st)

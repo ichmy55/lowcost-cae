@@ -37,7 +37,6 @@ CALL get_param.uws
 CALL edge.uws
 CALL showbeak.uws
 CALL dispatcher.uws
-CALL ppink.uws
 CALL zoomit.uws
 //
 // メイン処理

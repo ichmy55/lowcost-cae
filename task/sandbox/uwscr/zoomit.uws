@@ -20,24 +20,28 @@ module zoomit
     //
     // Zoomit の動作モード変更
     //
-    if flag then  // Ctrl+2 キーの押下
+    if flag then
+      // Ctrl+2 キーの押下
       KBD(VK_CONTROL,DOWN,100)
       KBD(VK_2,CLICK,100)
       KBD(VK_CONTROL,UP)
-      doscmd("echo qwe1 > \output\qwe1.txt")
-      print "QWE1"
-      sleep(10)
-      doscmd("echo qwe2 > \output\qwe2.txt")
-      print "QWE2"
     else
-      SCKEY(0,VK_ESCAPE)        // Esc キーの押下
+      // Esc キーの押下
+      KBD(VK_ESCAPE,100)
     endif
     result = TRUE
   fend
 
-  function line(x,y)
+  function line(x,y,x2,y2)
     //
     // 線引き
+    MMV(x2,y2)             //マウスを終点に
+    KBD(VK_SHIFT,DOWN,100) //shiiftキー
+    BTN(LEFT,DOWN,100)     //マウス左キー
+    MMV(x,y,100)           //マウスを始点に
+    sleep(0.1)
+    BTN(LEFT,UP,100)       //マウス左キー戻し
+    KBD(VK_SHIFT,UP,100)   //shiiftキー戻し
     result = TRUE
   fend
 endmodule
