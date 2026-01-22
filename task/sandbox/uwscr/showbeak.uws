@@ -3,7 +3,7 @@ module showbeak
   const  fontName         = "MS Gothic" // 吹き出し内文字フォント名
   const  fontColor        = $000000     // 吹き出し内文字色
   const  fontsize         = 20          // タイトル帯での文字サイズ
-  const  fontsize1        = 32          // 初期タイトル帯での文字サイズ
+  const  fontsize1        = 30          // 初期タイトル帯での文字サイズ
   const  fontsize2        = 14          // 確認要求での文字サイズ
   const  transparency     = 0           // 文字背景の透明度
   const  title_dy         = 300         // 初期タイトル帯の表示位置
@@ -23,22 +23,27 @@ module showbeak
   // 吹き出しの表示
   //
   function beak(direction: number, colc: number, x: number, y: number, st)
-  if (direction >= 5) THEN
-    x += delta2[direction][0]
-    y += delta2[direction][1]
-    if (st != EMPTY) THEN
-      if (direction == 5) THEN
-        st = "　" + st
-      ENDIF
-      balloon(st, x, y, 0, fontSize, fontName, fontColor, bgColor[colc], transparency)
-    ENDIF
+    print "QWE1="+direction
+    if (direction >= 5) THEN
+        print "QWE2="+direction
+        x += delta2[direction][0]
+        y += delta2[direction][1]
+        if (st != EMPTY) THEN
+          if (direction == 5) THEN
+            st = "　" + st
+          ENDIF
+//        balloon(st, x, y, 0, fontSize, fontName, fontColor, bgColor[colc], transparency)
+        ENDIF
     ELSE
-      balloon(st, x, y, direction, fontSize, fontName, fontColor, bgColor[colc], transparency)
+      print "QWE3="+direction
+      balloon(st, x, y, 0, fontSize, fontName, fontColor, bgColor[colc], transparency)
     ENDIF
     breaker = breaker orB $000002
     xnow = x
     ynow = y
+    print "QWE4="+direction
     this.wait_break()
+    print "QWE5="+direction
     balloon()
     result = TRUE
   FEND

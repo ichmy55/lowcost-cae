@@ -3,7 +3,9 @@
 //
 module zoomit
   //
-  const timeout = 100       // timeout待ち時間[sec] 
+  const timeout   =  30   // timeout待ち時間[sec] 
+  const wait_sec  = 0.1   // wait待ち時間[sec] 
+  const wait_msec = 100   // wait待ち時間[sec] 
   //
   function init()
   //
@@ -13,6 +15,12 @@ module zoomit
     clkitem(zid,"Agree",CLK_BTN)  // Licenseの承認ボタン
     zid = getid("Zoomit - Sysinternals",,timeout)
     clkitem(zid,"OK",CLK_BTN)     // 設定のOKボタン
+    lid = 0
+    repeat
+      lid = lid + 1
+      sleep(wait_sec)
+      zid = getid("Zoomit - Sysinternals",,timeout)
+    UNTIL ((zid < 0) or (lid > timeout/wait_sec )) // Zoomit設定画面が閉じるまで待つ
     result = TRUE
   fend
 
@@ -22,12 +30,12 @@ module zoomit
     //
     if flag then
       // Ctrl+2 キーの押下
-      KBD(VK_CONTROL,DOWN,100)
-      KBD(VK_2,CLICK,100)
+      KBD(VK_CONTROL,DOWN,wait_msec)
+      KBD(VK_2,CLICK,wait_msec)
       KBD(VK_CONTROL,UP)
     else
       // Esc キーの押下
-      KBD(VK_ESCAPE,100)
+      KBD(VK_ESCAPE,wait_msec)
     endif
     result = TRUE
   fend
@@ -35,13 +43,13 @@ module zoomit
   function line(x,y,x2,y2)
     //
     // 線引き
-    MMV(x2,y2)             //マウスを終点に
-    KBD(VK_SHIFT,DOWN,100) //shiiftキー
-    BTN(LEFT,DOWN,100)     //マウス左キー
-    MMV(x,y,100)           //マウスを始点に
-    sleep(0.1)
-    BTN(LEFT,UP,100)       //マウス左キー戻し
-    KBD(VK_SHIFT,UP,100)   //shiiftキー戻し
+    MMV(x2,y2)                   //マウスを終点に
+    KBD(VK_SHIFT,DOWN,wait_msec) //shiiftキー
+    BTN(LEFT,DOWN,,,wait_msec)   //マウス左キー
+    MMV(x,y,wait_msec)           //マウスを始点に
+    BTN(LEFT,UP,,,wait_msec)     //マウス左キー戻し
+    KBD(VK_SHIFT,UP,wait_msec)   //shiiftキー戻し
+    sleep(wait_sec)
     result = TRUE
   fend
 endmodule
