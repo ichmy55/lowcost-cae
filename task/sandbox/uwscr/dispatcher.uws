@@ -33,32 +33,28 @@ module dispatcher
           zoomit.mode(true)
         case 32
           zoomit.line(x,y,x2,y2)
+        case 33
+          zoomit.arrow(x,y,x2,y2)
+        case 34
+          zoomit.box(x,y,x2,y2)
         case 0
-          doscmd("echo %date% %time% > \output\qwe3.txt")
           breaker = 0
           THREAD showbeak.title(st)
           lid = 0
           repeat
             lid = lid + 1
             sleep(0.1)
-          UNTIL ((breaker andB $00000F) == $000001) or (lid > waitsec * 10)
+          UNTIL ((breaker andB $00000F) == $000003) or (lid > waitsec * 10)
           showbeak.save_image()
           showbeak.wait_click()
-          doscmd("echo %date% %time% > \output\qwe4.txt")
         case 1
           breaker = 0
-          THREAD showbeak.beak(direction,colc,x,y,st)
-          THREAD showbeak.beak(direction+5,colc,x,y,st2)
-          //THREAD showbeak.beak2(direction,colc,x,y,st2)
-          doscmd("echo %date% %time% > \output\qwe5.txt")
+          THREAD showbeak.beak(direction,colc,x,y,st,st2)
           lid = 0
           repeat
             lid = lid + 1
             sleep(0.1)
-            print "QWE9="+lid+","+breaker
           UNTIL ((breaker andB $00000F) == $000007) or (lid > waitsec * 100)
-          doscmd("echo %date% %time% > \output\qwe6.txt")
-          print "QWE6="+lid+","+breaker
           showbeak.save_image()
           showbeak.wait_click()
       SELEND

@@ -52,4 +52,32 @@ module zoomit
     sleep(wait_sec)
     result = TRUE
   fend
+
+  function arrow(x,y,x2,y2)
+    //
+    // 矢印線引き
+    MMV(x2,y2)                   //マウスを終点に
+    KBD(VK_CTRL,DOWN,wait_msec)  //controlキー
+    KBD(VK_SHIFT,DOWN,wait_msec) //shiiftキー
+    BTN(LEFT,DOWN,,,wait_msec)   //マウス左キー
+    MMV(x,y,wait_msec)           //マウスを始点に
+    BTN(LEFT,UP,,,wait_msec)     //マウス左キー戻し
+    KBD(VK_SHIFT,UP,wait_msec)   //shiiftキー戻し
+    KBD(VK_CTRL,UP,wait_msec)    //controlキー戻し
+    sleep(wait_sec)
+    result = TRUE
+  fend
+
+  function box(x,y,x2,y2)
+    //
+    // 四角形線引き
+    MMV(x2,y2)                   //マウスを終点に
+    KBD(VK_CTRL,DOWN,wait_msec)  //controlキー
+    BTN(LEFT,DOWN,,,wait_msec)   //マウス左キー
+    MMV(x,y,wait_msec)           //マウスを始点に
+    BTN(LEFT,UP,,,wait_msec)     //マウス左キー戻し
+    KBD(VK_CTRL,UP,wait_msec)    //controlキー戻し
+    sleep(wait_sec)
+    result = TRUE
+  fend
 endmodule
