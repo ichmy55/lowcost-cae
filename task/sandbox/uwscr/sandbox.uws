@@ -38,6 +38,7 @@ CALL edge.uws
 CALL showbeak.uws
 CALL dispatcher.uws
 CALL zoomit.uws
+doscmd("echo %date% %time% > \output\qwe1.txt")
 //
 // メイン処理
 //
