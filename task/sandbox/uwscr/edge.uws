@@ -1,59 +1,101 @@
+module edge
 //
 // Edge 起動
 //
-PROCEDURE start_edge
-  builder = BrowserBuilder(BC_MSEDGE)
-  msedge  = builder.start()
-  ctrlwin(msedge.id(),MAX)
-  if msedge.count > 0 then
-    tab = msedge[0]
-  else
-    tab = msedge.new("about:blank")
-  endif
-  tab.navigate(initial_url)
-  //ctrlwin(msedge.id(),TOPMOST)
-  //ctrlwin(msedge.id(),ACTIVATE)
-FEND
+  function init()
+    builder = BrowserBuilder(BC_MSEDGE)
+    msedge  = builder.start()
+    ctrlwin(msedge.id(),MAX)
+    if msedge.count > 0 then
+      tab = msedge[0]
+    else
+      tab = msedge.new("about:blank")
+    endif
+    tab.navigate(initial_url)
+    //ctrlwin(msedge.id(),TOPMOST)
+    //ctrlwin(msedge.id(),ACTIVATE)
+    RESULT=true
+  FEND
 //
 // Edge にURL入力
 //
-PROCEDURE url_edge(st)
-  tab.navigate(st)
-FEND
+  function url_edge(st)
+    tab.navigate(st)
+    RESULT=true
+  FEND
 //
 // Edge にカーソル移動してクリック
 //
-PROCEDURE mouth_edge(x: number, y: number)
-  MMV(x,y)
-  BTN(LEFT,CLICK)
-FEND
+  function mouth_edge(x: number, y: number)
+    MMV(x,y)
+    BTN(LEFT,CLICK)
+    xnow = x
+    ynow = y
+    RESULT=true
+  FEND
 //
 // Edge 下方向スクロール
 //
-PROCEDURE scroll_edge(n: number)
-  ctrlwin(msedge.id(),ACTIVATE)
-  for lid = 0 to  10 
-    BTN(WHEEL,n/10,500,500,100)
-  next
-  tab.wait()
-  sleep(0.5)
-FEND
+  function scroll_edge(n: number)
+    ctrlwin(msedge.id(),ACTIVATE)
+    for lid = 0 to  10 
+      BTN(WHEEL,n/10,500,500,100)
+    next
+    tab.wait()
+    sleep(0.5)
+    RESULT=true
+  FEND
 //
 // Edge にカーソル移動
 //
-PROCEDURE keyimage_edge(st)
-  st = "C:\script\keyimage\"+st
-  pt = SearchImage(st,95,1)
-  x = pt[0][0] +100
-  y = pt[0][1] +20
-  BTN(LEFT,CLICK,x,y)
-  print "QWE8"
-  print x
-  print y
-FEND
+  function keyimage_edge(st)
+    st = "C:\script\keyimage\"+st
+    pt = SearchImage(st,95,1)
+    x = pt[0][0] +100
+    y = pt[0][1] +20
+    BTN(LEFT,CLICK,x,y)
+    xnow = x
+    ynow = y
+    RESULT=true
+  FEND
+//
+// イメージ出現待ち
+//
+  function waitkey_edge(st)
+    st = "C:\script\keyimage\"+st
+    lid = 0
+    repeat
+      pt = SearchImage(st,95,1)
+      lid = lid + 1
+      sleep(0.1)
+    UNTIL (LENGTH(pt) >=1) or (lid > waitsec2 * 10)
+    RESULT=true
+  FEND
 //
 // Edge にカーソル移動
 //
-PROCEDURE move_edge(x: number, y: number)
-  MMV(x,y)
-FEND
+  function move_edge(x: number, y: number)
+    MMV(x,y)
+    xnow = x
+    ynow = y
+    RESULT=true
+  FEND
+//
+// ドラッグ移動
+//
+  function drug(x: number, y: number)
+    xnow = 100
+    ynow = 100
+    x = 200
+    y = 200
+    BTN(LEFT, UP,,,100)
+    BTN(LEFT, DOWN,xnow,ynow,100)
+    MMV(x,y)
+    BTN(LEFT, DOWN,200,200,100)
+    BTN(LEFT, UP,,,100)
+    xnow = x
+    ynow = y
+    RESULT=true
+  FEND
+
+endmodule

@@ -1,0 +1,65 @@
+module dispatcher
+//
+// コマンドを順次実行
+//
+  function selector()
+    print "Num of commands = " + command_num
+    for n = 0 to command_num -1
+      direction = command_list[n][0]
+      colc = command_list[n][1]
+      x    = command_list[n][2]
+      y    = command_list[n][3]
+      x2   = command_list[n][4]
+      y2   = command_list[n][5]
+      st   = command_list[n][6]
+      st2  = command_list[n][7]
+      print "Command #=" + n + " dir=" + direction + "st=" + st
+      select direction
+        case 11
+          edge.init()
+        case 12
+          edge.url_edge(st)
+        case 13
+          edge.mouth_edge(x,y)
+        case 14
+          edge.scroll_edge(x)
+        case 15
+          edge.keyimage_edge(st)
+        case 16
+          edge.waitkey_edge(st)
+        case 17
+          edge.move_edge(x,y)
+        case 31
+          zoomit.mode(true)
+        case 32
+          zoomit.line(x,y,x2,y2)
+        case 33
+          zoomit.arrow(x,y,x2,y2)
+        case 34
+          zoomit.box(x,y,x2,y2)
+        case 0
+          breaker = 0
+          THREAD showbeak.title(st)
+          lid = 0
+          repeat
+            lid = lid + 1
+            sleep(0.1)
+          UNTIL ((breaker andB $00000F) == $000003) or (lid > waitsec * 10)
+          showbeak.save_image()
+          showbeak.wait_click()
+        case 1
+          breaker = 0
+          THREAD showbeak.beak(direction,colc,x,y,st,st2)
+          lid = 0
+          repeat
+            lid = lid + 1
+            sleep(0.1)
+          UNTIL ((breaker andB $00000F) == $000007) or (lid > waitsec * 100)
+          showbeak.save_image()
+          showbeak.wait_click()
+      SELEND
+    next
+    result = TRUE
+  fend
+//
+endmodule

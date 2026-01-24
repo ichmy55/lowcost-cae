@@ -1,38 +1,42 @@
-//
-// 起動パラメータ処理
-//
-PROCEDURE get_parameter(PARAM_STR)
-  debugf = false
-  modef  = modeconst[1]
-  for s in  PARAM_STR
-    IF (s == debugconst ) THEN
-      debugf = true
-    ELSEIF (copy(s,1,2) == "F=")
-      fname = copy(s,3)
-    ELSE
-      for s2 in modeconst
-        IF (s == s2 ) THEN
-          modef = s2
-        ENDIF
+module getparam
+  //
+  // 起動パラメータ処理
+  //
+  function get_parameter(PARAM_STR)
+    debugf = false
+    modef  = modeconst[1]
+    for s in  PARAM_STR
+      IF (s == debugconst ) THEN
+        debugf = true
+      ELSEIF (copy(s,1,2) == "F=")
+        fname = copy(s,3)
+      ELSE
+        for s2 in modeconst
+          IF (s == s2 ) THEN
+            modef = s2
+          ENDIF
+        next
+      ENDIF
+    next
+    result = TRUE
+  FEND
+  //
+  // コマンドファイル読み込み処理
+  //
+  function get_commands()
+    DIM FID = FOPEN(csv_filename, F_READ)
+    DIM buf = [0,0,0,0,0,0,"",""]
+    command_num = FGET(FID, F_LINECOUNT) -1
+    for row = 1 to command_num
+      for col =  1 to 6
+        buf[col-1] = VAL(FGET(FID,row,col))
       next
-    ENDIF
-  next
-FEND
-//
-// コマンドファイル読み込み処理
-//
-PROCEDURE get_commands()
-  DIM FID = FOPEN(csv_filename, F_READ)
-  DIM buf = [0,0,0,0,"",""]
-  command_num = FGET(FID, F_LINECOUNT) -1
-  for row = 1 to command_num
-    for col =  1 to 4
-      buf[col-1] = VAL(FGET(FID,row,col))
+      for col = 7 to 8
+        buf[col-1] = FGET(FID,row,col)
+      next
+      command_list = command_list + buf
     next
-    for col = 5 to 6
-      buf[col-1] = FGET(FID,row,col)
-    next
-    command_list = command_list + buf
-  next
-  FCLOSE(FID)
-FEND
+    FCLOSE(FID)
+    result = TRUE
+  FEND
+endmodule

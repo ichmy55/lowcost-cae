@@ -1,0 +1,90 @@
+module showbeak
+  //
+  const  fontName         = "MS Gothic" // 吹き出し内文字フォント名
+  const  fontColor        = $000000     // 吹き出し内文字色
+  const  fontsize         = 20          // タイトル帯での文字サイズ
+  const  fontsize1        = 30          // 初期タイトル帯での文字サイズ
+  const  fontsize2        = 14          // 確認要求での文字サイズ
+  const  transparency     = 0           // 文字背景の透明度
+  const  title_dy         = 300         // 初期タイトル帯の表示位置
+  //
+  // 初期タイトル帯の表示
+  //
+  function title(st)
+    const margin  = "　　　　　　　　　　　　　　　　　　　　　　　　　　　　<#CR>"
+    const margin2 = "<#CR>　　　　　　　　　　　　　　　　　　　　　　　　　　　　"
+    st = margin + st + margin2
+    balloon(st, 0, title_dy,0, fontSize1, fontName, fontColor, bgColor[0], transparency)
+    breaker = breaker orB $000003
+    this.wait_break()
+    balloon()
+    result = TRUE
+  fend
+  //
+  // 吹き出しの表示
+  //
+  function beak(direction: number, colc: number, x: number, y: number, st, st2)
+    x2 = x + 0
+    y2 = y + 70
+    if (st2 != EMPTY) THEN
+       st = st + "<#CR>" + st2
+       y2 = y2 + 30
+    ENDIF
+    breaker = breaker orB $000003
+    balloon(st, x, y, 0, fontSize, fontName, fontColor, bgColor[colc], transparency)
+    THREAD this.beak2(direction,colc,x2,y2)
+    this.wait_break()
+    balloon()
+    result = TRUE
+  FEND
+  //
+  // 吹き出しの表示2
+  //
+  function beak2(direction: number, colc: number, x: number, y: number)
+    if (modef == modeconst[0] ) THEN
+      balloon(confirm, x, y,0, fontSize2, fontName, fontColor, bgColor[colc], transparency)
+    ENDIF
+    breaker = breaker orB $000004
+    this.wait_break()
+    balloon()
+  FEND
+  //
+  // 表示終了待ち
+  //
+  function wait_break()
+    lid = 0
+    sleep(0.1)
+    repeat
+      lid = lid + 1
+      sleep(0.1)
+    UNTIL ((breaker andB $800000) != 0) or (lid > waitsec * 100) 
+    balloon()
+    result = TRUE
+  fend
+  //
+  // クリック待ち
+  //
+  function wait_click()
+    lid = 0
+    if (modef == modeconst[0] ) THEN
+      repeat
+        lid = lid + 1
+        sleep(0.1)
+      UNTIL (getkeystate(VK_LBUTTON) or (lid > waitsec * 10)) 
+    ENDIF
+    breaker = breaker orB $800000
+    sleep(0.5)
+    result = TRUE
+  FEND
+  //
+  // 画像保存
+  //
+  function save_image()
+    if (fname != EMPTY) THEN
+       fn = "C:\output\" + fname + format(fnamenum,3,0,FMT_ZERO)
+       fnamenum = fnamenum + 1
+       SAVEIMG(fn)
+    endif 
+    result = TRUE
+  FEND
+endmodule
