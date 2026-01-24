@@ -3,7 +3,7 @@ module showbeak
   const  fontName         = "MS Gothic" // 吹き出し内文字フォント名
   const  fontColor        = $000000     // 吹き出し内文字色
   const  fontsize         = 20          // タイトル帯での文字サイズ
-  const  fontsize1        = 32          // 初期タイトル帯での文字サイズ
+  const  fontsize1        = 30          // 初期タイトル帯での文字サイズ
   const  fontsize2        = 14          // 確認要求での文字サイズ
   const  transparency     = 0           // 文字背景の透明度
   const  title_dy         = 300         // 初期タイトル帯の表示位置
@@ -15,29 +15,24 @@ module showbeak
     const margin2 = "<#CR>　　　　　　　　　　　　　　　　　　　　　　　　　　　　"
     st = margin + st + margin2
     balloon(st, 0, title_dy,0, fontSize1, fontName, fontColor, bgColor[0], transparency)
-    breaker = breaker orB $000001
+    breaker = breaker orB $000003
     this.wait_break()
+    balloon()
     result = TRUE
   fend
   //
   // 吹き出しの表示
   //
-  function beak(direction: number, colc: number, x: number, y: number, st)
-  if (direction >= 5) THEN
-    x += delta2[direction][0]
-    y += delta2[direction][1]
-    if (st != EMPTY) THEN
-      if (direction == 5) THEN
-        st = "　" + st
-      ENDIF
-      balloon(st, x, y, 0, fontSize, fontName, fontColor, bgColor[colc], transparency)
+  function beak(direction: number, colc: number, x: number, y: number, st, st2)
+    x2 = x + 0
+    y2 = y + 70
+    if (st2 != EMPTY) THEN
+       st = st + "<#CR>" + st2
+       y2 = y2 + 30
     ENDIF
-    ELSE
-      balloon(st, x, y, direction, fontSize, fontName, fontColor, bgColor[colc], transparency)
-    ENDIF
-    breaker = breaker orB $000002
-    xnow = x
-    ynow = y
+    breaker = breaker orB $000003
+    balloon(st, x, y, 0, fontSize, fontName, fontColor, bgColor[colc], transparency)
+    THREAD this.beak2(direction,colc,x2,y2)
     this.wait_break()
     balloon()
     result = TRUE
@@ -45,19 +40,11 @@ module showbeak
   //
   // 吹き出しの表示2
   //
-  function beak2(direction: number, colc: number, x: number, y: number, st2)
-    x += delta[direction][0]
-    y += delta[direction][1]
-    if (st2 != EMPTY) THEN
-      x += delta2[direction][0]
-      y += delta2[direction][1]
-    endif
+  function beak2(direction: number, colc: number, x: number, y: number)
     if (modef == modeconst[0] ) THEN
       balloon(confirm, x, y,0, fontSize2, fontName, fontColor, bgColor[colc], transparency)
     ENDIF
     breaker = breaker orB $000004
-    xnow = x
-    ynow = y
     this.wait_break()
     balloon()
   FEND
@@ -70,7 +57,7 @@ module showbeak
     repeat
       lid = lid + 1
       sleep(0.1)
-    UNTIL ((breaker andB $800000) != 0) or (lid > waitsec * 10) 
+    UNTIL ((breaker andB $800000) != 0) or (lid > waitsec * 100) 
     balloon()
     result = TRUE
   fend

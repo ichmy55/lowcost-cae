@@ -37,7 +37,7 @@ CALL get_param.uws
 CALL edge.uws
 CALL showbeak.uws
 CALL dispatcher.uws
-CALL ppink.uws
+CALL zoomit.uws
 //
 // メイン処理
 //
@@ -46,12 +46,12 @@ print "Debug start"
 LOGPRINT(debugf,1100,400)
 getparam.get_parameter(PARAM_STR)
 getparam.get_commands()
-ppink.init()
+zoomit.init()
 //
 // コマンドを順次実行
 //
 dispatcher.selector()
 //
-sleep(10)
+sleep(1)
 showbeak.save_image()
 print "Debug ends"

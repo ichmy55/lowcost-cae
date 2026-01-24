@@ -42,9 +42,9 @@ download: ## 実行ファイルをネットからダウンロードする
 		wget -N $(UWSCR_URL)
 		unzip UWSCRx64.zip
 	fi
-	@if [ ! -d ./ppink ]; then
-		wget -N $(PPINK_URL)
-		unzip ppink.1.9.100.zip
+	@if [ ! -e ./Zoomit64.exe ]; then
+		wget -N $(ZOOMIT_URL)
+		unzip Zoomit.zip
 	fi
 
 clean: ## ローカル環境のファイルを掃除し、再度持ち上げ

@@ -1,0 +1,83 @@
+//
+// zoomitを制御する関数群
+//
+module zoomit
+  //
+  const timeout   =  30   // timeout待ち時間[sec] 
+  const wait_sec  = 0.1   // wait待ち時間[sec] 
+  const wait_msec = 100   // wait待ち時間[sec] 
+  //
+  function init()
+  //
+  // zoomitの起動
+    exec("C:\download\zoomit64.exe")
+    zid = getid("Zoomit License Agreement",,timeout)
+    clkitem(zid,"Agree",CLK_BTN)  // Licenseの承認ボタン
+    zid = getid("Zoomit - Sysinternals",,timeout)
+    clkitem(zid,"OK",CLK_BTN)     // 設定のOKボタン
+    lid = 0
+    repeat
+      lid = lid + 1
+      sleep(wait_sec)
+      zid = getid("Zoomit - Sysinternals",,timeout)
+    UNTIL ((zid < 0) or (lid > timeout/wait_sec )) // Zoomit設定画面が閉じるまで待つ
+    result = TRUE
+  fend
+
+  function mode(flag)
+    //
+    // Zoomit の動作モード変更
+    //
+    if flag then
+      // Ctrl+2 キーの押下
+      KBD(VK_CONTROL,DOWN,wait_msec)
+      KBD(VK_2,CLICK,wait_msec)
+      KBD(VK_CONTROL,UP)
+    else
+      // Esc キーの押下
+      KBD(VK_ESCAPE,wait_msec)
+    endif
+    result = TRUE
+  fend
+
+  function line(x,y,x2,y2)
+    //
+    // 線引き
+    MMV(x2,y2)                   //マウスを終点に
+    KBD(VK_SHIFT,DOWN,wait_msec) //shiiftキー
+    BTN(LEFT,DOWN,,,wait_msec)   //マウス左キー
+    MMV(x,y,wait_msec)           //マウスを始点に
+    BTN(LEFT,UP,,,wait_msec)     //マウス左キー戻し
+    KBD(VK_SHIFT,UP,wait_msec)   //shiiftキー戻し
+    sleep(wait_sec)
+    result = TRUE
+  fend
+
+  function arrow(x,y,x2,y2)
+    //
+    // 矢印線引き
+    MMV(x2,y2)                   //マウスを終点に
+    KBD(VK_CTRL,DOWN,wait_msec)  //controlキー
+    KBD(VK_SHIFT,DOWN,wait_msec) //shiiftキー
+    BTN(LEFT,DOWN,,,wait_msec)   //マウス左キー
+    MMV(x,y,wait_msec)           //マウスを始点に
+    BTN(LEFT,UP,,,wait_msec)     //マウス左キー戻し
+    KBD(VK_SHIFT,UP,wait_msec)   //shiiftキー戻し
+    KBD(VK_CTRL,UP,wait_msec)    //controlキー戻し
+    sleep(wait_sec)
+    result = TRUE
+  fend
+
+  function box(x,y,x2,y2)
+    //
+    // 四角形線引き
+    MMV(x2,y2)                   //マウスを終点に
+    KBD(VK_CTRL,DOWN,wait_msec)  //controlキー
+    BTN(LEFT,DOWN,,,wait_msec)   //マウス左キー
+    MMV(x,y,wait_msec)           //マウスを始点に
+    BTN(LEFT,UP,,,wait_msec)     //マウス左キー戻し
+    KBD(VK_CTRL,UP,wait_msec)    //controlキー戻し
+    sleep(wait_sec)
+    result = TRUE
+  fend
+endmodule
