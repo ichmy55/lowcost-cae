@@ -30,7 +30,7 @@ module dispatcher
         case 17
           edge.move_edge(x,y)
         case 31
-          zoomit.mode(true)
+          zoomit.mode(2)
         case 32
           zoomit.line(x,y,x2,y2)
         case 33
@@ -39,24 +39,14 @@ module dispatcher
           zoomit.box(x,y,x2,y2)
         case 0
           breaker = 0
-          THREAD showbeak.title(st)
-          lid = 0
-          repeat
-            lid = lid + 1
-            sleep(0.1)
-          UNTIL ((breaker andB $00000F) == $000003) or (lid > waitsec * 10)
+          showbeak.title(st)
           showbeak.save_image()
-          showbeak.wait_click()
+          zoomit.confirm1()
         case 1
           breaker = 0
-          THREAD showbeak.beak(direction,colc,x,y,st,st2)
-          lid = 0
-          repeat
-            lid = lid + 1
-            sleep(0.1)
-          UNTIL ((breaker andB $00000F) == $000007) or (lid > waitsec * 100)
+          showbeak.beak(direction,colc,x,y,st,st2)
           showbeak.save_image()
-          showbeak.wait_click()
+          zoomit.confirm2()
       SELEND
     next
     result = TRUE

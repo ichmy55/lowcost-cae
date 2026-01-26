@@ -4,7 +4,7 @@ module getparam
   //
   function get_parameter(PARAM_STR)
     debugf = false
-    modef  = modeconst[1]
+    modef  = modeconst[0]
     for s in  PARAM_STR
       IF (s == debugconst ) THEN
         debugf = true
@@ -26,7 +26,7 @@ module getparam
   function get_commands()
     DIM FID = FOPEN(csv_filename, F_READ)
     DIM buf = [0,0,0,0,0,0,"",""]
-    command_num = FGET(FID, F_LINECOUNT) -1
+    command_num = FGET(FID, F_LINECOUNT) 
     for row = 1 to command_num
       for col =  1 to 6
         buf[col-1] = VAL(FGET(FID,row,col))
