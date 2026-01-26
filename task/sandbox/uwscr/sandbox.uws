@@ -5,7 +5,7 @@ OPTION LOGPATH = "C:\output\uwscr.log"
 //
 // 大域定数
 //
-const  waitsec          = 10          // クリック待ちする秒数
+const  waitsec          = 60          // クリック待ちする秒数
 const  waitsec2         = 600         // ファイルダウンロード待ちする秒数
 const  confirm          = "準備ができたら、左クリックしてください" // 確認要求
 const  csv_filename     = "commands.csv" 
