@@ -1,4 +1,4 @@
 #
 cd C:\download
-uwscr.exe C:\script\sandbox.uws step F=prepomax
+uwscr.exe C:\script\sandbox.uws through F=prepomax
 pause

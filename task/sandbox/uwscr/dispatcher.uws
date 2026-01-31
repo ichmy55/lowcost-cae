@@ -22,12 +22,14 @@ module dispatcher
         case 13
           edge.mouth_edge(x,y)
         case 14
-          edge.scroll_edge(x)
+          edge.tabclick_edge(st)
         case 15
-          edge.keyimage_edge(st)
+          edge.scroll_edge(x)
         case 16
-          edge.waitkey_edge(st)
+          edge.keyimage_edge(st)
         case 17
+          edge.waitkey_edge(st)
+        case 18
           edge.move_edge(x,y)
         case 31
           zoomit.mode(2)

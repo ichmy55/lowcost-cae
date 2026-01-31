@@ -1,5 +1,9 @@
 module edge
 //
+  const wait_sec      = 0.1  // wait待ち時間[sec]
+  const wait_msec     = 100  // wait待ち時間[msec]
+  PUBLIC tab
+//
 // Edge 起動
 //
   function init()
@@ -12,8 +16,6 @@ module edge
       tab = msedge.new("about:blank")
     endif
     tab.navigate(initial_url)
-    //ctrlwin(msedge.id(),TOPMOST)
-    //ctrlwin(msedge.id(),ACTIVATE)
     RESULT=true
   FEND
 //
@@ -28,9 +30,21 @@ module edge
 //
   function mouth_edge(x: number, y: number)
     MMV(x,y)
-    BTN(LEFT,CLICK)
-    xnow = x
-    ynow = y
+    BTN(LEFT,CLICK,x,y,wait_msec)
+    sleep(wait_sec)
+    BTN(LEFT,CLICK,x,y,wait_msec)
+    tab.wait()
+    RESULT=true
+  FEND
+//
+// Edge にーソル移動してクリック
+//
+  function tabclick_edge(st)
+    lid = 0
+    repeat
+      lid = lid + 1
+      sleep(wait_sec)
+    UNTIL (BRSetData(tab, TRUE, st) or (lid > waitsec2 / wait_sec))
     RESULT=true
   FEND
 //
@@ -46,16 +60,14 @@ module edge
     RESULT=true
   FEND
 //
-// Edge にカーソル移動
+// イメージに一致する箇所をクリック
 //
   function keyimage_edge(st)
     st = "C:\script\keyimage\"+st
     pt = SearchImage(st,95,1)
     x = pt[0][0] +100
     y = pt[0][1] +20
-    BTN(LEFT,CLICK,x,y)
-    xnow = x
-    ynow = y
+    BTN(LEFT,CLICK,x,y,wait_msec)
     RESULT=true
   FEND
 //
@@ -76,25 +88,17 @@ module edge
 //
   function move_edge(x: number, y: number)
     MMV(x,y)
-    xnow = x
-    ynow = y
     RESULT=true
   FEND
 //
 // ドラッグ移動
 //
   function drug(x: number, y: number)
-    xnow = 100
-    ynow = 100
-    x = 200
-    y = 200
     BTN(LEFT, UP,,,100)
-    BTN(LEFT, DOWN,xnow,ynow,100)
+    BTN(LEFT, DOWN,,,100)
     MMV(x,y)
     BTN(LEFT, DOWN,200,200,100)
     BTN(LEFT, UP,,,100)
-    xnow = x
-    ynow = y
     RESULT=true
   FEND
 

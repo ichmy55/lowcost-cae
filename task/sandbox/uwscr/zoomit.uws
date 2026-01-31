@@ -5,8 +5,8 @@ module zoomit
   //
   const timeout       =  30  // timeout待ち時間[sec] 
   const wait_sec      = 0.1  // wait待ち時間[sec] 
-  const wait_msec     = 100  // wait待ち時間[sec] 
-  const conf_m        = "準備ができたら、シフトキーを押してください" // 確認要求
+  const wait_msec     = 100  // wait待ち時間[msec] 
+  const conf_m        = "準備ができたら、ALTキーを押してください" // 確認要求
   const conf_font     = "メイリオ"                               // 確認要求のフォント
   const conf_fontsize = "16"                                     // 確認要求のフォントサイズ
   const confirm_x = 250
@@ -63,6 +63,8 @@ module zoomit
   function line(x,y,x2,y2)
     //
     // 線引き
+    this.mode(2)
+    KBD(VK_R,CLICK,wait_msec)           //文字色を赤に
     MMV(x2,y2)                   //マウスを終点に
     KBD(VK_SHIFT,DOWN,wait_msec) //shiiftキー
     BTN(LEFT,DOWN,,,wait_msec)   //マウス左キー
@@ -76,12 +78,16 @@ module zoomit
   function arrow(x,y,x2,y2)
     //
     // 矢印線引き
+    print "QWE7="+x+","+y+","+x2+","+y2
+    this.mode(2)
+    KBD(VK_R,CLICK,wait_msec)        //文字色を赤に
     MMV(x2,y2)                   //マウスを終点に
     KBD(VK_CTRL,DOWN,wait_msec)  //controlキー
     KBD(VK_SHIFT,DOWN,wait_msec) //shiiftキー
     BTN(LEFT,DOWN,,,wait_msec)   //マウス左キー
+    BTN(LEFT,DOWN,x2,y2,wait_msec)   //マウス左キー
     MMV(x,y,wait_msec)           //マウスを始点に
-    BTN(LEFT,UP,,,wait_msec)     //マウス左キー戻し
+    BTN(LEFT,UP,x,y,wait_msec)       //マウス左キー戻し
     KBD(VK_SHIFT,UP,wait_msec)   //shiiftキー戻し
     KBD(VK_CTRL,UP,wait_msec)    //controlキー戻し
     sleep(wait_sec)
@@ -91,11 +97,14 @@ module zoomit
   function box(x,y,x2,y2)
     //
     // 四角形線引き
-    KBD(VK_CTRL,DOWN,wait_msec)  //controlキー
+    this.mode(2)
+    KBD(VK_R,CLICK,wait_msec)        //文字色を赤に
+    MMV(x2,y2)                       //マウスを終点に
+    KBD(VK_CTRL,DOWN,wait_msec)      //controlキー
     BTN(LEFT,DOWN,x2,y2,wait_msec)   //マウス左キー
-    sleep(wait_sec)
-    BTN(LEFT,UP,x,y,wait_msec)     //マウス左キー戻し
-    KBD(VK_CTRL,UP,wait_msec)    //controlキー戻し
+    MMV(x,y,wait_msec)               //マウスを始点に
+    BTN(LEFT,UP,x,y,wait_msec)       //マウス左キー戻し
+    KBD(VK_CTRL,UP,wait_msec)        //controlキー戻し
     sleep(wait_sec)
     result = TRUE
   fend
@@ -103,26 +112,26 @@ module zoomit
   function confirm1()
     //
     // 次進んでよいかを聞く(初回）
-    BTN(LEFT,UP)                                 // 左クリックの押上げ
-    BTN(LEFT,UP,confirm_x,confirm_y,wait_msec)   // 左クリックの押上げ
-    this.mode(2)
-    KBD(VK_SHIFT,DOWN,wait_msec)        //shiiftキー
-    KBD(VK_G,CLICK,wait_msec)           //文字色を緑に
-    KBD(VK_SHIFT,UP,wait_msec)          //shiiftキー
-    BTN(LEFT,CLICK,confirm_x,confirm_y,wait_msec)   // マウスを始点へ
-    KBD(VK_T,CLICK,wait_msec)           //Tキー
-    sleep(wait_sec)
-    KBD(VK_DOWN,CLICK,wait_msec)        //下矢印キー
-    KBD(VK_DOWN,CLICK,wait_msec)        //下矢印キー
-    KBD(VK_DOWN,CLICK,wait_msec)        //下矢印キー
-    KBD(conf_m,CLICK,wait_msec)         //確認メッセージ
-    BTN(RIGHT,CLICK,term_x,term_y,wait_msec)          // 右クリックの押下
-    lid = 0
     if (modef == modeconst[0] ) THEN
+      BTN(LEFT,UP)                                 // 左クリックの押上げ
+      BTN(LEFT,UP,confirm_x,confirm_y,wait_msec)   // 左クリックの押上げ
+      this.mode(2)
+      KBD(VK_SHIFT,DOWN,wait_msec)        //shiiftキー
+      KBD(VK_G,CLICK,wait_msec)           //文字色を緑に
+      KBD(VK_SHIFT,UP,wait_msec)          //shiiftキー
+      BTN(LEFT,CLICK,confirm_x,confirm_y,wait_msec)   // マウスを始点へ
+      KBD(VK_T,CLICK,wait_msec)           //Tキー
+      sleep(wait_sec)
+      KBD(VK_DOWN,CLICK,wait_msec)        //下矢印キー
+      KBD(VK_DOWN,CLICK,wait_msec)        //下矢印キー
+      KBD(VK_DOWN,CLICK,wait_msec)        //下矢印キー
+      KBD(conf_m,CLICK,wait_msec)         //確認メッセージ
+      BTN(RIGHT,CLICK,term_x,term_y,wait_msec)          // 右クリックの押下
+      lid = 0
       repeat
         lid = lid + 1
         sleep(0.1)
-      UNTIL (getkeystate(VK_SHIFT) or (lid > waitsec * 10))
+      UNTIL (getkeystate(VK_ALT) or (lid > waitsec * 10))
     ENDIF
     this.mode(0)
     showbeak.clean()
@@ -132,22 +141,22 @@ module zoomit
   function confirm2()
     //
     // 次進んでよいかを聞く
-    this.mode(2)
-    BTN(LEFT,UP)                                 // 左クリックの押上げ
-    BTN(LEFT,UP,confirm_x,confirm_y,wait_msec)   // 左クリックの押上げ
-    KBD(VK_SHIFT,DOWN,wait_msec)        //shiiftキー
-    KBD(VK_G,CLICK,wait_msec)           //文字色を緑に
-    KBD(VK_SHIFT,UP,wait_msec)          //shiiftキー
-    KBD(VK_T,CLICK,wait_msec)           //Tキー
-    sleep(wait_sec)
-    KBD(conf_m,CLICK,wait_msec)         //確認メッセージ
-    BTN(RIGHT,CLICK,term_x,term_y,wait_msec)          // 右クリックの押下
-    lid = 0
     if (modef == modeconst[0] ) THEN
+      this.mode(2)
+      BTN(LEFT,UP)                                 // 左クリックの押上げ
+      BTN(LEFT,UP,confirm_x,confirm_y,wait_msec)   // 左クリックの押上げ
+      KBD(VK_SHIFT,DOWN,wait_msec)        //shiiftキー
+      KBD(VK_G,CLICK,wait_msec)           //文字色を緑に
+      KBD(VK_SHIFT,UP,wait_msec)          //shiiftキー
+      KBD(VK_T,CLICK,wait_msec)           //Tキー
+      sleep(wait_sec)
+      KBD(conf_m,CLICK,wait_msec)         //確認メッセージ
+      BTN(RIGHT,CLICK,term_x,term_y,wait_msec)          // 右クリックの押下
+      lid = 0
       repeat
         lid = lid + 1
         sleep(0.1)
-      UNTIL (getkeystate(VK_LBUTTON) or (lid > waitsec * 10))
+      UNTIL (getkeystate(VK_ALT) or (lid > waitsec * 10))
     ENDIF
     this.mode(0)
     showbeak.clean()
